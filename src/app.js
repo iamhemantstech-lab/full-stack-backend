@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { ApiResponse } from "./utils/ApiResponse.js";
 
 const app = express();
 
@@ -16,6 +17,19 @@ app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 app.use(express.static("public"));
 // set cookie from server on the frontend site
 app.use(cookieParser());
+
+// check on production
+app.get("/", (_, res) => {
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        null,
+        "Backend is running successfully on production!"
+      )
+    );
+});
 
 // routes import
 import userRouter from "./routes/user.Routes.js";
