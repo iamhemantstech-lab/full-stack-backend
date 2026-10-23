@@ -1,4 +1,4 @@
-import { asyncHandler } from "../utils/asynchandler.js";
+import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/todos/user.models.js"; // this User direct connect with db using mongoose
 import { fileUploadOnCloudinary } from "../utils/cloudinary.js";
