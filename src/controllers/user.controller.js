@@ -45,8 +45,8 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User with email or number already exists");
   }
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  const avatarLocalPath = req?.files?.avatar[0]?.path;
+  const coverImageLocalPath = req?.files?.coverImage[0]?.path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required...");
@@ -69,9 +69,9 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
   });
 
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+  const createdUser = await User.findById(user._id)
+    .select("-password -refreshToken")
+    .lean();
   // here we verified user is created or not in db and we remove password, refreshToken field
   // in select method default select all fields and use "-" sign for fields which we do not send on frontend side
 
