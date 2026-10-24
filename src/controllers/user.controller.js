@@ -16,6 +16,12 @@ const generateAccessAndRefreshToken = async (userId) => {
   return { accessToken, refreshToken };
 };
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+};
+
 const registerUser = asyncHandler(async (req, res) => {
   // steps
   // 1 get details from frontend
@@ -119,16 +125,10 @@ const loginUser = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
-  // options for cookie
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
-
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
     .json(
       new ApiResponse(
         200,
@@ -149,15 +149,10 @@ const logoutUser = asyncHandler(async (req, res) => {
     }
   );
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
-
   return res
     .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
     .json(new ApiResponse(200, {}, "User Logout successfully"));
 });
 
@@ -189,15 +184,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       user?._id
     );
 
-    const options = {
-      httpOnly: true,
-      secure: true,
-    };
-
     return res
       .status(200)
-      .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
+      .cookie("accessToken", accessToken, cookieOptions)
+      .cookie("refreshToken", refreshToken, cookieOptions)
       .json(
         new ApiResponse(
           200,
