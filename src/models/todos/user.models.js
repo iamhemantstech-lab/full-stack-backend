@@ -42,6 +42,11 @@ const UserSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
     timestamps: true,
@@ -69,6 +74,7 @@ UserSchema.methods.generateAccessToken = function () {
     email: this.email,
     firstname: this.firstname,
     lastname: this.lastname,
+    role: this.role || "user",
   };
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRY,

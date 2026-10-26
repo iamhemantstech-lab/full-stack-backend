@@ -63,10 +63,12 @@ app.get("/", (_, res) => {
 
 // routes import
 import userRouter from "./routes/user.Routes.js";
+import productRouter from "./routes/product.Routes.js";
 
 // routes declartion
 // here we used middleware for call routes and controll goes to import route
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/products", productRouter);
 
 // Global Error Handler Middleware
 // Express requires all 4 parameters (err, req, res, next) to recognize it as an error handler
