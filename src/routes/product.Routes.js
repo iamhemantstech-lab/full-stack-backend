@@ -8,11 +8,12 @@ import {
   seedProducts,
 } from "../controllers/product.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 // Public routes for fetching products
-router.route("/").get(getAllProducts);
+router.route("/").get(verifyJWT, getAllProducts);
 
 // Create product (supports single file 'image' upload via Multer OR direct JSON image URL)
 router.route("/").post(upload.single("image"), createProduct);
