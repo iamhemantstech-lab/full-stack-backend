@@ -146,6 +146,26 @@ const foreachDouble = radius.forEach((o) => foreachRes.push(o * 2));
 
 /*-------------------slice and splice-----------------*/
 const n = [10, 20, 12, 32, 45, 40];
-console.log("slice", n.slice(1, 3));
-// console.log("splice", n.splice());
+const sl = n.slice(1, 3); // create a new array
+// console.log("slice", sl);
+const spl = n.splice(1, 0, 100); // modified original array
+console.log("splice", spl);
+
 console.log("n", n);
+// console.log("start");
+// setTimeout(() => {
+//   console.log("log of settimout");
+// }, 0);
+
+// console.log("*****interval start");
+// let count = 1;
+// const intervalID = setInterval(() => {
+//   console.log("*****log of setinterval", ++count);
+//   ++count;
+//   console.log("actuial val", count);
+
+//   if (count == 10) {
+//     clearInterval(intervalID);
+//   }
+// }, 1000);
+// console.log("*****interval end");
